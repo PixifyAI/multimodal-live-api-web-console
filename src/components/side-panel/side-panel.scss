@@ -5,27 +5,27 @@
     width: 193px;
     height: 30px;
 
-    .react-select__single-value {
+    &__single-value {
       color: var(--Neutral-90);
     }
 
-    .react-select__menu {
+    &__menu {
       background: var(--Neutral-20);
       color: var(--Neutral-90);
     }
 
-    .react-select__option {
+    &__option {
     }
-    .react-select__value-container {
+    &__value-container {
     }
-    .react-select__indicators {
+    &__indicators {
     }
-    .react-select__option:hover,
-    .react-select__option:focus,
-    .react-select_option:focus-within {
+    &__option:hover,
+    &__option:focus,
+    &_option:focus-within {
       background: var(--Neutral-30);
     }
-    .react-select__option--is-focused: {
+    &__option--is-focused {
       background: var(--Neutral-30);
     }
   }
@@ -43,12 +43,17 @@
   font-style: normal;
   font-weight: 400;
   line-height: 160%; /* 20.8px */
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
 
   .hidden {
     display: none !important;
   }
 
   &.open {
+    transform: translateX(0);
     .top {
       h2 {
         left: 0%;
@@ -97,6 +102,7 @@
   }
 
   &:not(.open) {
+    transform: translateX(-100%);
     .side-panel-container {
       opacity: 0;
       display: none;

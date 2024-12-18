@@ -17,8 +17,8 @@
 import { useRef, useState } from "react";
 import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
-import SidePanel from "./components/side-panel/SidePanel";
 import { Altair } from "./components/altair/Altair";
+import SidePanel from "./components/side-panel/SidePanel";
 import ControlTray from "./components/control-tray/ControlTray";
 import cn from "classnames";
 
@@ -44,8 +44,8 @@ function App() {
           <SidePanel />
           <main>
             <div className="main-app-area">
-              {/* APP goes here */}
-              <Altair />
+                            {/* APP goes here */}
+                            <Altair />
               <video
                 className={cn("stream", {
                   hidden: !videoRef.current || !videoStream,
@@ -54,6 +54,10 @@ function App() {
                 autoPlay
                 playsInline
               />
+              <h2 className="main-app-header">Welcome to the Multimodal Live API Web Console</h2>
+              <p className="main-app-placeholder">
+              The Multimodal Live API enables low-latency, two-way interactions that use text, audio, and video input, with audio and text output. This facilitates natural, human-like voice conversations with the ability to interrupt the model at any time. The model's video understanding capability expands communication modalities, enabling you to share camera input or screencasts and ask questions about them.
+              </p>
             </div>
 
             <ControlTray

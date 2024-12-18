@@ -94,7 +94,7 @@ function AltairComponent() {
     };
   }, [client]);
 
-  const embedRef = useRef<HTMLDivElement>(null);
+const embedRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (embedRef.current && jsonString) {
