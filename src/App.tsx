@@ -54,9 +54,9 @@ function App() {
                 autoPlay
                 playsInline
               />
-              <h2 className="main-app-header">Welcome to the Multimodal Live API Web Console</h2>
+              <h2 className="main-app-header">Multimodal Live Web Console</h2>
               <p className="main-app-placeholder">
-              The Multimodal Live API enables low-latency, two-way interactions that use text, audio, and video input, with audio and text output. This facilitates natural, human-like voice conversations with the ability to interrupt the model at any time. The model's video understanding capability expands communication modalities, enabling you to share camera input or screencasts and ask questions about them.
+              The Multimodal Live Console enables low-latency, two-way interactions that use text, audio, and video input. Enjoy natural, human-like voice conversations with the ability to interrupt the model at any time. The model's video understanding capability expands communication modalities, enabling you to share your screen as input or camera and get help from the AI vision. Click the play button and then the screen share button or cam button.
               </p>
             </div>
 
