@@ -22,6 +22,7 @@ import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
 import { useLoggerStore } from "../../lib/store-logger";
 import Logger, { LoggerFilterType } from "../logger/Logger";
 import "./side-panel.scss";
+import VantaBackground from "../VantaBackground";
 
 const filterOptions = [
   { value: "conversations", label: "Conversations" },
@@ -29,9 +30,23 @@ const filterOptions = [
   { value: "none", label: "All" },
 ];
 
-export default function SidePanel() {
+interface SidePanelProps {
+  onOpenChange?: (isOpen: boolean) => void;
+}
+
+export default function SidePanel({ onOpenChange }: SidePanelProps) {
   const { connected, client } = useLiveAPIContext();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState<boolean>(true);
+
+  const togglePanel = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Toggle panel clicked, current state:', open);
+    const newState = !open;
+    setOpen(newState);
+    onOpenChange?.(newState);
+    console.log('New state will be:', !open);
+  };
   const loggerRef = useRef<HTMLDivElement>(null);
   const loggerLastHeightRef = useRef<number>(-1);
   const { log, logs } = useLoggerStore();
@@ -74,18 +89,17 @@ export default function SidePanel() {
 
   return (
     <div className={`side-panel ${open ? "open" : ""}`}>
+      <VantaBackground />
       <header className="top">
         <h2>Console</h2>
-        {open ? (
-          <button className="opener" onClick={() => setOpen(false)}>
-            <RiSidebarFoldLine color="#b4b8bb" />
-          </button>
-        ) : (
-          <button className="opener" onClick={() => setOpen(true)}>
-            <RiSidebarUnfoldLine color="#b4b8bb" />
-          </button>
-        )}
       </header>
+      <button className="opener" onClick={togglePanel}>
+        {open ? (
+          <RiSidebarFoldLine color="#b4b8bb" />
+        ) : (
+          <RiSidebarUnfoldLine color="#b4b8bb" />
+        )}
+      </button>
       <section className="indicators">
         <Select
           className="react-select"

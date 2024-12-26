@@ -15,6 +15,7 @@
  */
 
 import { useRef, useState } from "react";
+import VantaBackground from "./components/VantaBackground";
 import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import { Altair } from "./components/altair/Altair";
@@ -36,16 +37,18 @@ function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
   // either the screen capture, the video or null, if null we hide it
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
+  const [isPanelOpen, setIsPanelOpen] = useState(true);
 
   return (
-    <div className="App">
+    <div className="App" style={{ height: '100vh', width: '100vw', position: 'relative' }}>
+      <VantaBackground />
       <LiveAPIProvider url={uri} apiKey={API_KEY}>
-        <div className="streaming-console">
-          <SidePanel />
-          <main>
+        <div className="streaming-console" style={{ position: 'relative', zIndex: 1 }}>
+          <SidePanel onOpenChange={setIsPanelOpen} />
+          <main style={{ marginLeft: isPanelOpen ? 0 : '-256px', transition: 'margin-left 0.3s ease-in-out', position: 'relative', zIndex: 5 }}>
             <div className="main-app-area">
-                            {/* APP goes here */}
-                            <Altair />
+              {/* APP goes here */}
+              <Altair />
               <video
                 className={cn("stream", {
                   hidden: !videoRef.current || !videoStream,
@@ -56,7 +59,14 @@ function App() {
               />
               <h2 className="main-app-header">Multimodal Live Web Console</h2>
               <p className="main-app-placeholder">
-              The Multimodal Live Console enables low-latency, two-way interactions that use text, audio, and video input. Enjoy natural, human-like voice conversations with the ability to interrupt the model at any time. The model's video understanding capability expands communication modalities, enabling you to share your screen as input or camera and get help from the AI vision. Click the play button and then the screen share button or cam button.
+                The Multimodal Live Console enables low-latency, two-way
+                interactions that use text, audio, and video input. Enjoy
+                natural, human-like voice conversations with the ability to
+                interrupt the model at any time. The model's video understanding
+                capability expands communication modalities, enabling you to
+                share your screen as input or camera and get help from the AI
+                vision. Click the play button and then the screen share button
+                or cam button.
               </p>
             </div>
 

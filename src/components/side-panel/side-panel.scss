@@ -30,23 +30,24 @@
     }
   }
   background: var(--Neutral-00);
-  width: 40px; /* when closed */
+  width: 256px;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  transition: all 0.2s ease-in;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family);
   border-right: 1px solid var(--gray-600);
   color: var(--Neutral-90, #e1e2e3);
-  font-family: var(--font-family);
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
-  line-height: 160%; /* 20.8px */
+  line-height: 160%;
   grid-column: 1;
   grid-row: 1 / span 2;
-  transform: translateX(0);
+  position: relative;
   transition: transform 0.3s ease-in-out;
+  z-index: 4;
+  overflow: visible;
+  transform: translateX(0);
 
   .hidden {
     display: none !important;
@@ -61,6 +62,11 @@
         opacity: 1;
       }
     }
+  }
+
+  & > :not(.top) {
+    position: relative;
+    z-index: 1;
   }
 
   .top {
@@ -78,8 +84,7 @@
       font-size: 21px;
       font-style: normal;
       font-weight: 500;
-      line-height: 16px; /* 100% */
-
+      line-height: 16px;
       opacity: 0;
       display: none;
       left: -100%;
@@ -97,12 +102,32 @@
   }
 
   .opener {
+    position: absolute;
+    top: 12px;
+    right: -30px;
     height: 30px;
-    transition: transform 0.2s ease-in;
+    width: 30px;
+    background: var(--Neutral-00);
+    border-radius: 0 4px 4px 0;
+    padding: 4px;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid var(--Neutral-20);
+    border-left: none;
+    pointer-events: auto;
   }
 
   &:not(.open) {
-    transform: translateX(-100%);
+    transform: translateX(-256px);
+    width: 256px;
+
+    & + main {
+      margin-left: -256px;
+    }
+
     .side-panel-container {
       opacity: 0;
       display: none;
@@ -115,10 +140,6 @@
       opacity: 0;
     }
 
-    .opener {
-      transform: translate(-50%, 0);
-    }
-
     .input-container {
       opacity: 0;
       display: none;
@@ -128,9 +149,10 @@
 
   .indicators {
     display: flex;
+    flex-direction: column;
     padding: 24px 25px;
-    justify-content: flex-end;
-    gap: 21px;
+    align-items: flex-start;
+    gap: 12px;
     .streaming-indicator {
       user-select: none;
       border-radius: 4px;
@@ -160,11 +182,10 @@
 
   .side-panel-container {
     align-self: flex-end;
-    width: 400px;
+    width: 256px;
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: auto;
-    /*scrollbar-gutter: stable both-edges;*/
   }
 
   .input-container {
@@ -237,10 +258,6 @@
       }
     }
   }
-}
-.side-panel.open {
-  width: 400px;
-  height: 100vh;
 }
 
 .side-panel-responses,

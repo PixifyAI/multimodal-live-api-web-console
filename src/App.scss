@@ -1,7 +1,7 @@
 :root {
-  --text: white;
-  --gray-200: #b4b8bb;
-  --gray-300: #80868b;
+  --text: #c352d1;
+  --gray-200: #c352d1;
+  --gray-300: #c352d1;
   --gray-500: #5f6368;
   --gray-600: #444444;
   --gray-700: #202020;
@@ -35,10 +35,13 @@
   --Neutral-15: #3e0c5f;
   --Neutral-20: #480d6f;
   --Neutral-30: #520e7f;
-  --Neutral-50: #7c14a9;
+  --Neutral-50: #c352d1;
   --Neutral-60: #961ab3;
   --Neutral-80: #c352d1;
   --Neutral-90: #a21caf;
+
+  --text: #c352d1;
+  --gray-300: #c352d1;
 
   --Green-500: #0d9c53;
   --Green-700: #025022;
@@ -50,6 +53,21 @@
   --Red-500: #ff4600;
   --Red-600: #e03c00;
   --Red-700: #bd3000;
+}
+
+html, body, #root {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.App {
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
 }
 
 body {
@@ -113,14 +131,17 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {}
 
-.streaming-console {
-  background: linear-gradient(to bottom, #2a0a3e, #1a0a2e);
-  color: var(--gray-300);
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr auto;
-  height: 100vh;
-  width: 100vw;
+  .streaming-console {
+    background: linear-gradient(to bottom, rgba(42, 10, 62, 0.95), rgba(26, 10, 46, 0.95));
+    color: var(--gray-300);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr auto;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
 
   a,
   a:visited,
@@ -136,34 +157,39 @@ body {
     }
   }
 
-  main {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    flex-grow: 1;
-    gap: 1rem;
-    max-width: 100%;
-    overflow: hidden;
-    grid-column: 2;
-    grid-row: 1;
-    padding: 20px;
-  }
+    main {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      flex-grow: 1;
+      gap: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+      grid-column: 2;
+      grid-row: 1;
+      padding: 20px;
+      z-index: 5;
+      transition: margin-left 0.3s ease-in-out;
+    }
 
   .main-app-area {
     display: flex;
     flex: 1;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     flex-direction: column;
     gap: 20px;
+    position: relative;
   }
 
   .main-app-header {
     color: var(--Neutral-90);
     font-size: 2rem;
     margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
   }
 
   .main-app-placeholder {
