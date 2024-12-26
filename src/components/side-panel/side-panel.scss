@@ -103,7 +103,7 @@
 
   .opener {
     position: absolute;
-    top: 16px; /* Adjusted for visual alignment */
+    top: 16px;
     right: -40px; /* Adjusted for right-side positioning */
     height: 40px;
     width: 40px;
@@ -142,12 +142,12 @@
   }
 
   &:not(.open) {
-    right: calc(-100% + 40px); /* Adjusted for right-side positioning */
-    width: 256px;
+    right: -256px; /* Hide the panel off-screen */
 
-    .opener {
-      right: -40px; /* Adjusted for right-side positioning */
-    } 
+    /* Keep the opener button visible and clickable */
+    .opener {      
+      right: 0; /* Position it at the edge of the screen */
+    }
 
     .side-panel-content-container { 
       opacity: 0;
