@@ -41,12 +41,26 @@ export function useWebcam(): UseMediaStreamResult {
   }, [stream]);
 
   const start = async () => {
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-    });
-    setStream(mediaStream);
-    setIsStreaming(true);
-    return mediaStream;
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+      setStream(mediaStream);
+      setIsStreaming(true);
+      return mediaStream;
+    } catch (error) {
+      console.error('Webcam access error:', error);
+      if (error instanceof Error) {
+        if (error.name === 'NotAllowedError') {
+          console.error('Camera permission denied');
+        } else if (error.name === 'NotFoundError') {
+          console.error('No camera found');
+        } else if (error.name === 'NotReadableError') {
+          console.error('Camera is already in use');
+        }
+      }
+      throw error;
+    }
   };
 
   const stop = () => {

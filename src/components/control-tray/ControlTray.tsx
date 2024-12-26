@@ -143,21 +143,54 @@ function ControlTray({
   }, [connected, activeVideoStream, client, videoRef]);
 
   //handler for swapping from one video-stream to the next
+  const [error, setError] = useState<string | null>(null);
+
   const changeStreams = (next?: UseMediaStreamResult) => async () => {
-    if (next) {
-      const mediaStream = await next.start();
-      setActiveVideoStream(mediaStream);
-      onVideoStreamChange(mediaStream);
-    } else {
+    try {
+      setError(null);
+      if (next) {
+        const mediaStream = await next.start();
+        setActiveVideoStream(mediaStream);
+        onVideoStreamChange(mediaStream);
+      } else {
+        setActiveVideoStream(null);
+        onVideoStreamChange(null);
+      }
+
+      videoStreams.filter((msr) => msr !== next).forEach((msr) => msr.stop());
+    } catch (err) {
+      // Clear any existing stream
       setActiveVideoStream(null);
       onVideoStreamChange(null);
+      
+      // Set error message
+      if (err instanceof Error) {
+        if (err.name === 'NotAllowedError') {
+          setError('Permission denied. Please allow access in your browser settings.');
+        } else if (err.name === 'NotFoundError') {
+          setError('No camera found. Please check your device.');
+        } else if (err.name === 'NotReadableError') {
+          setError('Device is already in use or not accessible.');
+        } else if (err.name === 'AbortError') {
+          setError('Operation cancelled by user.');
+        } else if (err.message === 'Screen sharing not supported') {
+          setError('Screen sharing is not supported in this environment. Please ensure you are using HTTPS or localhost.');
+        } else {
+          setError('An error occurred while accessing media device.');
+        }
+      }
+      console.error('Media stream error:', err);
     }
-
-    videoStreams.filter((msr) => msr !== next).forEach((msr) => msr.stop());
   };
 
   return (
     <section className="control-tray">
+      {error && (
+        <div className="media-error">
+          {error}
+          <button onClick={() => setError(null)} className="close-error">×</button>
+        </div>
+      )}
       <canvas style={{ display: "none" }} ref={renderCanvasRef} />
       <nav className={cn("actions-nav", { disabled: !connected })}>
         <button

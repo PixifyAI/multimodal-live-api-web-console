@@ -41,15 +41,30 @@ export function useScreenCapture(): UseMediaStreamResult {
   }, [stream]);
 
   const start = async () => {
-    // const controller = new CaptureController();
-    // controller.setFocusBehavior("no-focus-change");
-    const mediaStream = await navigator.mediaDevices.getDisplayMedia({
-      video: true,
-      // controller
-    });
-    setStream(mediaStream);
-    setIsStreaming(true);
-    return mediaStream;
+    try {
+      if (!navigator.mediaDevices?.getDisplayMedia) {
+        console.error('Screen sharing not supported in this browser/environment');
+        throw new Error('Screen sharing not supported');
+      }
+      const mediaStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+      });
+      setStream(mediaStream);
+      setIsStreaming(true);
+      return mediaStream;
+    } catch (error) {
+      console.error('Screen capture error:', error);
+      if (error instanceof Error) {
+        if (error.name === 'NotAllowedError') {
+          console.error('Screen sharing permission denied');
+        } else if (error.name === 'NotReadableError') {
+          console.error('Screen sharing failed - source might be unavailable');
+        } else if (error.name === 'AbortError') {
+          console.error('Screen sharing cancelled by user');
+        }
+      }
+      throw error;
+    }
   };
 
   const stop = () => {
