@@ -102,30 +102,51 @@
   }
 
   .opener {
-    position: absolute;
+    position: fixed;
     top: 12px;
-    right: -30px;
-    height: 30px;
-    width: 30px;
+    left: 256px;
+    height: 40px;
+    width: 40px;
     background: var(--Neutral-00);
     border-radius: 0 4px 4px 0;
-    padding: 4px;
+    padding: 0;
     z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     border: 1px solid var(--Neutral-20);
-    border-left: none;
     pointer-events: auto;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+
+    &:hover, &:active {
+      background: var(--Neutral-20);
+      border-color: var(--Neutral-50);
+      
+      svg {
+        color: var(--Neutral-50) !important;
+        transform: scale(1.1);
+      }
+    }
+
+    &:active {
+      background: var(--Neutral-30);
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      transition: all 0.2s ease-in-out;
+    }
   }
 
   &:not(.open) {
     transform: translateX(-256px);
     width: 256px;
 
-    & + main {
-      margin-left: -256px;
+    .opener {
+      left: 0;
     }
 
     .side-panel-container {

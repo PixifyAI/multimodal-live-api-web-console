@@ -95,9 +95,9 @@ export default function SidePanel({ onOpenChange }: SidePanelProps) {
       </header>
       <button className="opener" onClick={togglePanel}>
         {open ? (
-          <RiSidebarFoldLine color="#b4b8bb" />
+          <RiSidebarFoldLine color="#b4b8bb" size={24} />
         ) : (
-          <RiSidebarUnfoldLine color="#b4b8bb" />
+          <RiSidebarUnfoldLine color="#b4b8bb" size={24} />
         )}
       </button>
       <section className="indicators">
