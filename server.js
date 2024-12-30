@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 app.use((req, res, next) => {
   console.log(`[CORS] Request origin: ${req.get('origin') || req.get('referer')}`);
   res.setHeader('Access-Control-Allow-Origin', '*'); // For debugging purposes only
-  res.setHeader('Permissions-Policy', 'camera=*, display-capture=*, microphone=*');
+  res.setHeader('Permissions-Policy', 'camera=*, display-capture=(self), microphone=*');
   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
   res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
