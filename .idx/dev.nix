@@ -9,7 +9,7 @@
   ];
   # Sets environment variables in the workspace
   env = {
-    REACT_APP_GEMINI_API_KEY = "AIzaSyDwISBCZcLIvuC8pQYXZRXRwwqekK_hwRg";
+    REACT_APP_GEMINI_API_KEY = "";
   };
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
